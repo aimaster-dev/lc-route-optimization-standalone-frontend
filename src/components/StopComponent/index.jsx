@@ -1,107 +1,122 @@
 import React from "react";
+import PropTypes from 'prop-types';
 
 const StopComponent = ({ data, setStopData }) => {
+    const handlePaste = (e, id) => {
+        e.preventDefault();
+        const pastedData = e.clipboardData.getData('text');
+        const values = pastedData.split('\t'); // Split by tab for Excel-like data
+        
+        // Map the pasted values to their corresponding fields
+        const fieldMapping = {
+            0: { name: 'latitude', type: 'number' },
+            1: { name: 'longitude', type: 'number' },
+            2: { name: 'currentContainerSize', type: 'number' },
+            3: { name: 'service_type', type: 'select' },
+        };
+
+        values.forEach((value, index) => {
+            if (fieldMapping[index]) {
+                const { name, type } = fieldMapping[index];
+                let processedValue = value.trim();
+                
+                if (type === 'number') {
+                    processedValue = parseFloat(processedValue);
+                    if (isNaN(processedValue)) return;
+                } else if (type === 'select') {
+                    processedValue = processedValue === 'SWG' ? 0 : 1;
+                }
+
+                const event = {
+                    target: {
+                        name,
+                        value: processedValue
+                    }
+                };
+                setStopData(event, id);
+            }
+        });
+    };
+
     return (
-        <div>
-            <h4>The stop data for {data.id}</h4>
-            <div className="d-flex justify-content-between">
-                <div className="form-item col-4">
-                    <label htmlFor={`latitude-${data.id}`} className="form-label">
-                        Latitude for Stop {data.id}
-                    </label>
-                    <input
-                        id={`latitude-${data.id}`}
-                        type="number"
-                        name="latitude"
-                        value={data.latitude}
-                        onChange={(e) => setStopData(e, data.id)}
-                        step="0.001"
-                        className="form-style"
-                        placeholder={`Latitude for Stop ${data.id}`}
-                    />
-                </div>
-                <div className="form-item col-4">
-                    <label htmlFor={`longitude-${data.id}`} className="form-label">
-                        Longitude for Stop {data.id}
-                    </label>
-                    <input
-                        id={`longitude-${data.id}`}
-                        type="number"
-                        name="longitude"
-                        value={data.longitude}
-                        onChange={(e) => setStopData(e, data.id)}
-                        step="0.001"
-                        className="form-style"
-                        placeholder={`Longitude for Stop ${data.id}`}
-                    />
-                </div>
-                <div className="form-item col-4">
-                    <label htmlFor={`conatinerSize-${data.id}`} className="form-label">
-                        Container Size for Stop {data.id}
-                    </label>
-                    <input
-                        id={`conatinerSize-${data.id}`}
-                        type="number"
-                        name="currentContainerSize"
-                        value={data.currentContainerSize}
-                        onChange={(e) => setStopData(e, data.id)}
-                        className="form-style"
-                        step="0.01"
-                        min={0}
-                        placeholder={`Container Size for Stop ${data.id}`}
-                    />
-                </div>
-            </div>
-            <div className="d-flex">
-                <div className="form-item col-4">
-                    <label htmlFor={`serviceTime-${data.id}`} className="form-label">
-                        Service Time for Stop {data.id}
-                    </label>
-                    <input
-                        id={`serviceTime-${data.id}`}
-                        type="number"
-                        name="serviceTime"
-                        value={data.serviceTime}
-                        onChange={(e) => setStopData(e, data.id)}
-                        className="form-style"
-                        step="0.01"
-                        min={0}
-                        placeholder={`Service Time for Stop ${data.id}`}
-                    />
-                </div>
-                <div className="form-item col-4">
-                    <label htmlFor={`service_type-${data.id}`} className="form-label">
-                        Service Type for Stop {data.id}
-                    </label>
-                    <select
-                        id={`service_type-${data.id}`}
-                        name="service_type"
-                        value={data.service_type}
-                        onChange={(e) => setStopData(e, data.id)}
-                        className="form-style"
-                        placeholder={`Service Type for Stop ${data.id}`}
-                    >
-                        <option value={0}>SWG</option>
-                        <option value={1}>DRT</option>
-                    </select>
-                </div>
-                <div className="form-item col-4">
-                    <label htmlFor={`note-${data.id}`} className="form-label">
-                        Note for Stop {data.id}
-                    </label>
-                    <input
-                        id={`note-${data.id}`}
-                        type="text"
-                        name="note"
-                        value={data.note}
-                        onChange={(e) => setStopData(e, data.id)}
-                        className="form-style"
-                        placeholder={`Note for Stop ${data.id}`}
-                    />
-                </div>
-            </div>
-            <hr/>
-        </div>
+        <table className="table table-bordered">
+            <thead>
+                <tr>
+                    <th colSpan="6">Stop Data for {data.id}</th>
+                </tr>
+                <tr>
+                    <th>Latitude</th>
+                    <th>Longitude</th>
+                    <th>Container Size</th>
+                    <th>Service Type</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <input
+                            type="number"
+                            name="latitude"
+                            value={data.latitude}
+                            onChange={(e) => setStopData(e, data.id)}
+                            onPaste={(e) => handlePaste(e, data.id)}
+                            step="0.001"
+                            className="form-control"
+                            placeholder="Latitude"
+                        />
+                    </td>
+                    <td>
+                        <input
+                            type="number"
+                            name="longitude"
+                            value={data.longitude}
+                            onChange={(e) => setStopData(e, data.id)}
+                            onPaste={(e) => handlePaste(e, data.id)}
+                            step="0.001"
+                            className="form-control"
+                            placeholder="Longitude"
+                        />
+                    </td>
+                    <td>
+                        <input
+                            type="number"
+                            name="currentContainerSize"
+                            value={data.currentContainerSize}
+                            onChange={(e) => setStopData(e, data.id)}
+                            onPaste={(e) => handlePaste(e, data.id)}
+                            className="form-control"
+                            step="0.01"
+                            min={0}
+                            placeholder="Container Size"
+                        />
+                    </td>
+                    <td>
+                        <select
+                            name="service_type"
+                            value={data.service_type}
+                            onChange={(e) => setStopData(e, data.id)}
+                            onPaste={(e) => handlePaste(e, data.id)}
+                            className="form-control"
+                        >
+                            <option value={0}>SWG</option>
+                            <option value={1}>DRT</option>
+                        </select>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
     );
 }
+
+StopComponent.propTypes = {
+    data: PropTypes.shape({
+        id: PropTypes.string.isRequired,
+        latitude: PropTypes.number,
+        longitude: PropTypes.number,
+        currentContainerSize: PropTypes.number,
+        service_type: PropTypes.number,
+    }).isRequired,
+    setStopData: PropTypes.func.isRequired
+};
+
 export default StopComponent;

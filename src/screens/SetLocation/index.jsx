@@ -103,10 +103,10 @@ const SetLocation = ({ setRoutesData }) => {
           Latitude: parseFloat(stop.latitude),  // Ensure it's a float
           Longitude: parseFloat(stop.longitude),
           CURRENT_CONTAINER_SIZE: parseInt(stop.currentContainerSize, 10),  // Ensure it's an integer
-          SERVICE_WINDOW_TIME: parseFloat(stop.serviceTime),
+          SERVICE_WINDOW_TIME: 0.0,
           // Map stop.service_type to "SWG" if it's 0, otherwise "DRT"
           SERVICE_TYPE_CD: stop.service_type === 0 ? "SWG" : "DRT",
-          PERM_NOTES: stop.note  // Ensure this is a string
+          PERM_NOTES: ""  // Ensure this is a string
         }))
       };
     }
