@@ -33,7 +33,9 @@ const SetLocation = ({ setRoutesData }) => {
       currentContainerSize: 0,
       serviceTime: 0,
       note: '',
-      service_type: 0
+      service_type: 0,
+      lf_latitude: 0,
+      lf_longitude: 0
     }));
     setIsSubmit(false)
     setStopCountData(newStopData);
@@ -73,10 +75,10 @@ const SetLocation = ({ setRoutesData }) => {
           Latitude: parseFloat(haul.latitude),  // Ensure these are floats
           Longitude: parseFloat(haul.longitude)
         },
-        LandFill: {
-          Latitude: parseFloat(landFill.latitude),
-          Longitude: parseFloat(landFill.longitude)
-        },
+        // LandFill: {
+        //   Latitude: parseFloat(landFill.latitude),
+        //   Longitude: parseFloat(landFill.longitude)
+        // },
         Stops: [
           {
             Latitude: 0,  // Ensure it's a float
@@ -85,7 +87,9 @@ const SetLocation = ({ setRoutesData }) => {
             SERVICE_WINDOW_TIME: 0,
             // Map stop.service_type to "SWG" if it's 0, otherwise "DRT"
             SERVICE_TYPE_CD: "SWG",
-            PERM_NOTES: ""  // Ensure this is a string
+            PERM_NOTES: "",  // Ensure this is a string
+            LF_Latitude: 0,
+            LF_Longitude: 0
           }
         ]
       };
@@ -95,10 +99,10 @@ const SetLocation = ({ setRoutesData }) => {
           Latitude: parseFloat(haul.latitude),  // Ensure these are floats
           Longitude: parseFloat(haul.longitude)
         },
-        LandFill: {
-          Latitude: parseFloat(landFill.latitude),
-          Longitude: parseFloat(landFill.longitude)
-        },
+        // LandFill: {
+        //   Latitude: parseFloat(landFill.latitude),
+        //   Longitude: parseFloat(landFill.longitude)
+        // },
         Stops: stopCountData.map((stop) => ({
           Latitude: parseFloat(stop.latitude),  // Ensure it's a float
           Longitude: parseFloat(stop.longitude),
@@ -106,12 +110,18 @@ const SetLocation = ({ setRoutesData }) => {
           SERVICE_WINDOW_TIME: 0.0,
           // Map stop.service_type to "SWG" if it's 0, otherwise "DRT"
           SERVICE_TYPE_CD: stop.service_type === 0 ? "SWG" : "DRT",
-          PERM_NOTES: ""  // Ensure this is a string
+          PERM_NOTES: "",  // Ensure this is a string
+          LF_Latitude: parseFloat(stop.lf_latitude),
+          LF_Longitude: parseFloat(stop.lf_longitude)
         }))
       };
     }
     try {
-      const response = await axios.post('http://localhost:8000/api/v2/route-map-old', submittedData, {
+      const apiUrl = isToggled ?
+      'http://localhost:8000/api/v2/route-map-old'
+      : 'http://localhost:8000/api/v1/route-map-new'
+
+      const response = await axios.post(apiUrl, submittedData, {
         headers: {
           'Content-Type': 'application/json',
         },
@@ -141,9 +151,9 @@ const SetLocation = ({ setRoutesData }) => {
     const fetchData = async () => {
       if (!submittedData) return;
       try {
-        const apiUrl = isToggled
-          ? 'http://localhost:8000/api/v1/route-map-new'
-          : 'http://localhost:8000/api/v2/route-map-old';
+        const apiUrl = isToggled ?
+        'http://localhost:8000/api/v2/route-map-old'
+        : 'http://localhost:8000/api/v1/route-map-new'
         const response = await axios.post(apiUrl, submittedData, {
           headers: {
             'Content-Type': 'application/json',
@@ -180,7 +190,7 @@ const SetLocation = ({ setRoutesData }) => {
             onChange={handleHaulChange} />
         </div>
       </div>
-      <div className="d-flex justify-content-start">
+      {/* <div className="d-flex justify-content-start">
         <label htmlFor='haul_latitude' className="form-label col-2">
           LandFill
         </label>
@@ -194,7 +204,7 @@ const SetLocation = ({ setRoutesData }) => {
             value={landFill.longitude}
             onChange={handleLandFillChange} />
         </div>
-      </div>
+      </div> */}
       <div className='d-flex'>
         <label htmlFor='haul_latitude' className="form-label col-2">
           Stop Count

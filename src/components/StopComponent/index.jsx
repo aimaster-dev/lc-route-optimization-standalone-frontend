@@ -13,6 +13,8 @@ const StopComponent = ({ data, setStopData }) => {
             1: { name: 'longitude', type: 'number' },
             2: { name: 'currentContainerSize', type: 'number' },
             3: { name: 'service_type', type: 'select' },
+            4: { name: 'lf_latitude', type: 'number' },
+            5: { name: 'lf_longitude', type: 'number' },
         };
 
         values.forEach((value, index) => {
@@ -49,6 +51,8 @@ const StopComponent = ({ data, setStopData }) => {
                     <th>Longitude</th>
                     <th>Container Size</th>
                     <th>Service Type</th>
+                    <th>LandFill Latitude</th>
+                    <th>LandFill Longitude</th>
                 </tr>
             </thead>
             <tbody>
@@ -101,6 +105,32 @@ const StopComponent = ({ data, setStopData }) => {
                             <option value={0}>SWG</option>
                             <option value={1}>DRT</option>
                         </select>
+                    </td>
+                    <td>
+                        <input
+                            type="number"
+                            name="currentContainerSize"
+                            value={data.lf_latitude}
+                            onChange={(e) => setStopData(e, data.id)}
+                            onPaste={(e) => handlePaste(e, data.id)}
+                            className="form-control"
+                            step="0.01"
+                            min={0}
+                            placeholder="LandFill Latitude"
+                        />
+                    </td>
+                    <td>
+                        <input
+                            type="number"
+                            name="currentContainerSize"
+                            value={data.lf_longitude}
+                            onChange={(e) => setStopData(e, data.id)}
+                            onPaste={(e) => handlePaste(e, data.id)}
+                            className="form-control"
+                            step="0.01"
+                            min={0}
+                            placeholder="Container Size"
+                        />
                     </td>
                 </tr>
             </tbody>

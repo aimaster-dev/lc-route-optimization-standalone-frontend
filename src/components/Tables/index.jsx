@@ -55,10 +55,10 @@ const RouteSegmentsTable = ({ route_id }) => {
     // return baseTime + additionalTime;
   };
 
-  const totalManualTime = calculateTotalTime(manualSegments) / 60;
+  const totalManualTime = calculateTotalTime(manualSegments);
   const totalManualDistance = manualSegments.reduce((acc, row) => acc + Number(row["Distance (km)"] || 0), 0);
 
-  const totalOptimalTime = calculateTotalTime(optimalSegments) / 60;
+  const totalOptimalTime = calculateTotalTime(optimalSegments);
   const totalOptimalDistance = optimalSegments.reduce((acc, row) => acc + Number(row["Distance (km)"] || 0), 0);
 
   const mSData = manualStandardData[0].map((name, index) => {
@@ -117,7 +117,7 @@ const RouteSegmentsTable = ({ route_id }) => {
               <tr className="totals-row">
                 <td></td>
                 <td><strong>Total</strong></td>
-                <td><strong>{totalManualTime.toFixed(2)} hours</strong></td>
+                <td><strong>{(totalManualTime / 60).toFixed(2)} hours</strong></td>
                 <td><strong>{totalManualDistance.toFixed(1)}</strong></td>
               </tr>
             </tbody>
@@ -180,7 +180,7 @@ const RouteSegmentsTable = ({ route_id }) => {
               <tr className="totals-row">
                 <td></td>
                 <td><strong>Total</strong></td>
-                <td><strong>{totalOptimalTime.toFixed(2)} hours</strong></td>
+                <td><strong>{(totalOptimalTime / 60).toFixed(2)} hours</strong></td>
                 <td><strong>{totalOptimalDistance.toFixed(1)}</strong></td>
               </tr>
             </tbody>
