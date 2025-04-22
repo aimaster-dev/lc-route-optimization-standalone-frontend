@@ -1,7 +1,6 @@
-import React from "react";
 import PropTypes from 'prop-types';
 
-const StopComponent = ({ data, setStopData }) => {
+const StopComponent = ({ data, setStopData, landFillData }) => {
     const handlePaste = (e, id) => {
         e.preventDefault();
         const pastedData = e.clipboardData.getData('text');
@@ -13,8 +12,7 @@ const StopComponent = ({ data, setStopData }) => {
             1: { name: 'longitude', type: 'number' },
             2: { name: 'currentContainerSize', type: 'number' },
             3: { name: 'service_type', type: 'select' },
-            4: { name: 'lf_latitude', type: 'number' },
-            5: { name: 'lf_longitude', type: 'number' },
+            4: { name: 'landfill_type', type: 'select' }
         };
 
         values.forEach((value, index) => {
@@ -51,8 +49,7 @@ const StopComponent = ({ data, setStopData }) => {
                     <th>Longitude</th>
                     <th>Container Size</th>
                     <th>Service Type</th>
-                    <th>LandFill Latitude</th>
-                    <th>LandFill Longitude</th>
+                    <th>LandFill Type</th>
                 </tr>
             </thead>
             <tbody>
@@ -107,30 +104,19 @@ const StopComponent = ({ data, setStopData }) => {
                         </select>
                     </td>
                     <td>
-                        <input
-                            type="number"
-                            name="lf_latitude"
-                            value={data.lf_latitude}
+                        <select
+                            name="landfill_type"
+                            value={data.landfill_type}
                             onChange={(e) => setStopData(e, data.id)}
                             onPaste={(e) => handlePaste(e, data.id)}
                             className="form-control"
-                            step="0.01"
-                            min={0}
-                            placeholder="LandFill Latitude"
-                        />
-                    </td>
-                    <td>
-                        <input
-                            type="number"
-                            name="lf_longitude"
-                            value={data.lf_longitude}
-                            onChange={(e) => setStopData(e, data.id)}
-                            onPaste={(e) => handlePaste(e, data.id)}
-                            className="form-control"
-                            step="0.01"
-                            min={0}
-                            placeholder="Container Size"
-                        />
+                            >
+                            {
+                                landFillData.map((item, key) => (
+                                    <option key={key} value={item.id}>{item.id}</option>
+                                ))
+                            }
+                        </select>
                     </td>
                 </tr>
             </tbody>
@@ -145,8 +131,10 @@ StopComponent.propTypes = {
         longitude: PropTypes.number,
         currentContainerSize: PropTypes.number,
         service_type: PropTypes.number,
+        landfill_type: PropTypes.number,
     }).isRequired,
-    setStopData: PropTypes.func.isRequired
+    setStopData: PropTypes.func.isRequired,
+    landFillData: PropTypes.array
 };
 
 export default StopComponent;

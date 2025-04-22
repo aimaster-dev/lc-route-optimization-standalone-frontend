@@ -2,7 +2,6 @@ import './App.css';
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer } from 'react-toastify';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import CSVUpload from './screens/CSVUpload';
 import SetLocation from './screens/SetLocation';
 import HomeScreen from './screens/Home';
 import { useState, useEffect } from 'react';
