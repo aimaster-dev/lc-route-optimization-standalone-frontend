@@ -123,7 +123,7 @@ const RouteSegmentsTable = ({ route_id }) => {
             </tbody>
           </table>
           {/* Actual PERM Notes Table */}
-          <div className="notes-table">
+          {/* <div className="notes-table">
             <h5>Actual Service Time</h5>
             <table className="results-table">
               <thead>
@@ -148,8 +148,8 @@ const RouteSegmentsTable = ({ route_id }) => {
                 })}
               </tbody>
             </table>
-          </div>
-        </div>
+          </div> */}
+        </div> 
         {/* Optimal Segments Table */}
         <div className="segments-table optimal-table">
           <h4>Optimal Routes</h4>
@@ -185,7 +185,7 @@ const RouteSegmentsTable = ({ route_id }) => {
               </tr>
             </tbody>
           </table>
-          {/* Optimal PERM Notes Table */}
+          {/* Optimal PERM Notes Table
           <div className="notes-table">
             <h5>Optimal Service Time</h5>
             <table className="results-table">
@@ -211,7 +211,7 @@ const RouteSegmentsTable = ({ route_id }) => {
                 })}
               </tbody>
             </table>
-          </div>
+          </div> */}
         </div>
       </div>
     </div>

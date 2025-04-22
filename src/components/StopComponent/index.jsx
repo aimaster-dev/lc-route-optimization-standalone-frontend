@@ -109,7 +109,7 @@ const StopComponent = ({ data, setStopData }) => {
                     <td>
                         <input
                             type="number"
-                            name="currentContainerSize"
+                            name="lf_latitude"
                             value={data.lf_latitude}
                             onChange={(e) => setStopData(e, data.id)}
                             onPaste={(e) => handlePaste(e, data.id)}
@@ -122,7 +122,7 @@ const StopComponent = ({ data, setStopData }) => {
                     <td>
                         <input
                             type="number"
-                            name="currentContainerSize"
+                            name="lf_longitude"
                             value={data.lf_longitude}
                             onChange={(e) => setStopData(e, data.id)}
                             onPaste={(e) => handlePaste(e, data.id)}
