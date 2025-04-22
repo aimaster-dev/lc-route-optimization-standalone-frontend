@@ -8,8 +8,8 @@ const LandFill = ({ data, setLandFillData }) => {
         
         // Map the pasted values to their corresponding fields
         const fieldMapping = {
-            0: { name: 'lf_latitude', type: 'number' },
-            1: { name: 'lf_longitude', type: 'number' },
+            0: { name: 'Latitude', type: 'number' },
+            1: { name: 'Longitude', type: 'number' },
         };
 
         values.forEach((value, index) => {
@@ -51,8 +51,8 @@ const LandFill = ({ data, setLandFillData }) => {
                     <td>
                         <input
                             type="number"
-                            name="lf_latitude"
-                            value={data.lf_latitude}
+                            name="Latitude"
+                            value={data.Latitude}
                             onChange={(e) => setLandFillData(e, data.id)}
                             onPaste={(e) => handlePaste(e, data.id)}
                             className="form-control"
@@ -64,8 +64,8 @@ const LandFill = ({ data, setLandFillData }) => {
                     <td>
                         <input
                             type="number"
-                            name="lf_longitude"
-                            value={data.lf_longitude}
+                            name="Longitude"
+                            value={data.Longitude}
                             onChange={(e) => setLandFillData(e, data.id)}
                             onPaste={(e) => handlePaste(e, data.id)}
                             className="form-control"
@@ -83,8 +83,8 @@ const LandFill = ({ data, setLandFillData }) => {
 LandFill.propTypes = {
     data: PropTypes.shape({
         id: PropTypes.string.isRequired,
-        lf_latitude: PropTypes.number,
-        lf_longitude: PropTypes.number
+        Latitude: PropTypes.number,
+        Longitude: PropTypes.number
     }).isRequired,
     setLandFillData: PropTypes.func.isRequired
 };

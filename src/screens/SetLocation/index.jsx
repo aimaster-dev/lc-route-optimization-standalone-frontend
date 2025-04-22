@@ -27,8 +27,8 @@ const SetLocation = ({ setRoutesData }) => {
     setLandFillCount(count);
     const newLandFillData = Array.from({ length: count }, (_, index) => ({
       id: index + 1,
-      lf_latitude: 0,
-      lf_longitude: 0
+      Latitude: 0,
+      Longitude: 0
     }));
     setLandFillData(newLandFillData);
   }
@@ -44,7 +44,7 @@ const SetLocation = ({ setRoutesData }) => {
       serviceTime: 0,
       note: '',
       service_type: 0,
-      landfill_type: 0
+      landfill_type: 1
     }));
     setStopCountData(newStopData);
     setIsSubmit(false)
@@ -103,8 +103,6 @@ const SetLocation = ({ setRoutesData }) => {
             // Map stop.service_type to "SWG" if it's 0, otherwise "DRT"
             SERVICE_TYPE_CD: "SWG",
             PERM_NOTES: "",  // Ensure this is a string
-            LF_Latitude: 0,
-            LF_Longitude: 0
           }
         ]
       };
