@@ -93,7 +93,7 @@ const RouteSegmentsTable = ({ route_id }) => {
           <table className="results-table">
             <thead>
               <tr>
-                <th>Service Window</th>
+                <th>Sequence</th>
                 <th>Segment</th>
                 <th>Time (min)</th>
                 <th>Distance (Mile)</th>
@@ -156,7 +156,7 @@ const RouteSegmentsTable = ({ route_id }) => {
           <table className="results-table">
             <thead>
               <tr>
-                <th>Seervice Window</th>
+                <th>Sequence</th>
                 <th>Segment</th>
                 <th>Time (min)</th>
                 <th>Distance (Mile)</th>
